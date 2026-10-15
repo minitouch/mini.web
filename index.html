@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="siteBrowserTitle">অপেক্ষা করুন...</title>
+    
+    <!-- External HLS JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="center-wrapper">
+        <div class="container">
+            <div id="offlineNotice" class="no-internet-box">
+                <h3>⚠️আপনার ইন্টারনেট বন্ধ⚠️</h3>
+                <p style="margin-bottom: 0; color: #fff; position: relative; z-index: 3;">দয়া করে ইন্টারনেট চালু করুন。</p>
+            </div>
+            
+            <div id="normalContent">
+                <div class="hero-section">
+                    <div class="visitor-stats-wrapper">
+                        <div class="visitor-stats">
+                            <div class="stats-title">👁️ এই সাইটটিতে ভিজিট করেছেন</div>
+                            <div class="stat-row"><span>আজকে:</span><span class="stat-number" id="vis-today">...</span></div>
+                            <div class="stat-row"><span>এই মাসে:</span><span class="stat-number" id="vis-month">...</span></div>
+                            <div class="stat-row"><span>সর্বমোট:</span><span class="stat-number" id="vis-total">...</span></div>
+                        </div>
+                    </div>
+                    <div class="logo-container">
+                        <div class="loader-ring" id="mainLogoLoader"></div>
+                        <img id="dynamicLogo" src="" alt="Logo" class="static-logo">
+                    </div>
+                </div>
+                
+                <h1 id="dynamicHeading">
+                    <span class="loading-placeholder text-placeholder"></span>
+                    <span class="loading-placeholder text-placeholder" style="width: 60%;"></span>
+                </h1>
+                
+                <p id="subText" style="display:none;">পুরাতন একাউন্ট লগ ইন দিন<br>অ্যাকাউন্ট না থাকলে অ্যাকাউন্ট নতুন ভাবে তৈরি করুন</p>
+                
+                <a href="#" id="redirectBtn" class="btn">সরাসরি প্রবেশ করুন</a>
+                
+                <div id="videoContainer" class="video-wrapper">
+                    <video id="myVideoPlayer" controls preload="auto" playsinline></video>
+                </div>
+
+                <div id="mediaBoxContainer" class="media-box-wrapper">
+                    <div class="media-box-content">
+                        <img id="mediaImage" src="" alt="Dynamic Photo">
+                        <video id="mediaVideo" controls preload="auto" playsinline></video>
+                        <iframe id="mediaYoutube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Link -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
