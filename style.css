@@ -28,30 +28,34 @@ body {
     max-width: 500px; 
 }
 
-/* মেইন কন্টেইনার বক্সের ফায়ার গ্লাস অ্যানিমেশন */
+/* মেইন কন্টেইনার বক্স - বাইরের অংশে ভারী ধোঁয়াশা ও ফায়ার গ্লো */
 .container { 
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* যাতে ধোঁয়াশা বা বাইরের গ্লো কেটে না যায় */
     text-align: center; 
     padding: 40px 30px 90px 30px; 
     border-radius: 24px; 
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 42, 0, 0.3); 
+    background: rgba(15, 17, 23, 0.95);
+    box-shadow: 0 0 40px rgba(255, 42, 0, 0.5), 0 0 80px rgba(255, 122, 0, 0.3), inset 0 0 25px rgba(255, 204, 0, 0.2); 
     width: 100%; 
     animation: slideUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards; 
     z-index: 20; 
 }
 
+/* বাইরের অংশের আসল স্মোকি ধোঁয়াশা ও রোটেশন ইফেক্ট */
 .container::before {
     content: ''; 
     position: absolute; 
-    top: -50%; 
-    left: -50%; 
-    width: 200%; 
-    height: 200%;
-    /* ফায়ার গ্লোয়িং কালার কম্বিনেশন */
-    background: conic-gradient(#ff2a00, #ff7a00, #ffcc00, transparent, transparent, #ff2a00);
+    top: -8px; 
+    left: -8px; 
+    right: -8px; 
+    bottom: -8px;
+    background: conic-gradient(from 0deg, #ff2a00, #ff7a00, #ffcc00, #ff0055, #ff2a00);
+    border-radius: 30px;
     animation: rotateBorder 4s linear infinite; 
-    z-index: 1;
+    z-index: -1;
+    filter: blur(14px); /* এই ব্লার প্রপার্টিটিই চারপাশের ধোঁয়াশা বা স্মোকি আভা তৈরি করবে */
+    opacity: 0.95;
 }
 
 .container::after {
@@ -61,10 +65,10 @@ body {
     left: 2px; 
     right: 2px; 
     bottom: 2px;
-    background: rgba(17, 18, 24, 0.95); 
+    background: rgba(15, 17, 23, 0.98); 
     backdrop-filter: blur(15px); 
     border-radius: 22px; 
-    z-index: 2;
+    z-index: -1;
 }
 
 #offlineNotice, #normalContent { 
@@ -113,7 +117,7 @@ p {
     display: none; 
 }
 
-/* স্পিনিং রিং অ্যানিমেশন (ফায়ার থিম) */
+/* স্পিনিং রিং অ্যানিমেশন (ধোঁয়াশা থিম) */
 .loader-ring { 
     position: absolute; 
     width: 80px; 
@@ -141,12 +145,12 @@ p {
     margin: 10px 0; 
 }
 
-/* ভিজিটর বক্সের ফায়ার বর্ডার অ্যানিমেশন */
+/* ভিজিটর বক্সের ধোঁয়াশা ও ফায়ার বর্ডার অ্যানিমেশন */
 .visitor-stats-wrapper {
     position: relative;
     border-radius: 12px;
     padding: 2px;
-    overflow: hidden;
+    overflow: visible;
     min-width: 175px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
@@ -154,12 +158,15 @@ p {
 .visitor-stats-wrapper::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(#ff2a00, #ff7a00, #ffcc00, transparent, transparent, #ff2a00);
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    background: conic-gradient(#ff2a00, #ff7a00, #ffcc00, #ff2a00);
+    border-radius: 14px;
     animation: rotateBorder 4s linear infinite;
+    filter: blur(8px);
+    z-index: 1;
 }
 
 .visitor-stats { 
@@ -210,40 +217,41 @@ p {
     font-weight: bold; 
     font-size: 15px; 
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
-    box-shadow: 0 8px 20px rgba(255, 42, 0, 0.4); 
+    box-shadow: 0 8px 25px rgba(255, 42, 0, 0.5); 
     white-space: nowrap; 
     position: relative; 
     margin: 15px auto 25px auto; 
     z-index: 10; 
-    border: 2px solid rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(5px);
 }
 
 .btn:hover { 
     transform: translateY(-4px) scale(1.02); 
-    box-shadow: 0 12px 30px rgba(255, 42, 0, 0.7); 
+    box-shadow: 0 12px 35px rgba(255, 42, 0, 0.8); 
 }
 
-/* ভিডিও বক্সের ফায়ার গ্লাস অ্যানিমেশন */
+/* ভিডিও বক্সের ধোঁয়াশা গ্লাস অ্যানিমেশন */
 .video-wrapper { 
     width: 100%; 
     margin-top: 20px; 
     display: none; 
     border-radius: 14px; 
-    overflow: hidden; 
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4); 
+    overflow: visible; 
     position: relative; 
 }
 
 .video-wrapper::before {
     content: ''; 
     position: absolute; 
-    top: -50%; 
-    left: -50%; 
-    width: 200%; 
-    height: 200%;
-    background: conic-gradient(#ff2a00, #ff7a00, #ffcc00, transparent, transparent, #ff2a00);
+    top: -6px; 
+    left: -6px; 
+    right: -6px; 
+    bottom: -6px;
+    background: conic-gradient(#ff2a00, #ff7a00, #ffcc00, #ff2a00);
+    border-radius: 18px;
     animation: rotateBorder 4s linear infinite; 
+    filter: blur(10px);
     z-index: 1;
 }
 
@@ -274,20 +282,21 @@ video {
     margin-top: 20px; 
     display: none; 
     border-radius: 14px; 
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4); 
+    overflow: visible; 
     position: relative;
 }
 
 .media-box-wrapper::before {
     content: ''; 
     position: absolute; 
-    top: -50%; 
-    left: -50%; 
-    width: 200%; 
-    height: 200%;
-    background: conic-gradient(#ff2a00, #ff7a00, #ffcc00, transparent, transparent, #ff2a00);
+    top: -6px; 
+    left: -6px; 
+    right: -6px; 
+    bottom: -6px;
+    background: conic-gradient(#ff2a00, #ff7a00, #ffcc00, #ff2a00);
+    border-radius: 18px;
     animation: rotateBorder 4s linear infinite; 
+    filter: blur(10px);
     z-index: 1;
 }
 
@@ -335,11 +344,11 @@ video {
     background: #000; 
 }
 
-/* অফলাইন নোটিশ বক্সের গ্লাস অ্যানিমেশন */
+/* অফলাইন নোটিশ বক্স */
 .no-internet-box { 
     display: none; 
     position: relative; 
-    overflow: hidden; 
+    overflow: visible; 
     padding: 15px; 
     border-radius: 15px; 
     margin-bottom: 20px; 
@@ -350,12 +359,14 @@ video {
 .no-internet-box::before {
     content: ''; 
     position: absolute; 
-    top: -50%; 
-    left: -50%; 
-    width: 200%; 
-    height: 200%;
-    background: conic-gradient(#e74c3c, #ff9f93, transparent, transparent, #e74c3c);
+    top: -6px; 
+    left: -6px; 
+    right: -6px; 
+    bottom: -6px;
+    background: conic-gradient(#e74c3c, #ff9f93, transparent, #e74c3c);
+    border-radius: 18px;
     animation: rotateBorder 4s linear infinite; 
+    filter: blur(10px);
     z-index: 1;
 }
 
