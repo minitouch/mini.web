@@ -57,14 +57,14 @@ document.getElementById('mediaVideo').onloadedmetadata = handleVideoScale;
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB-rvwlsYHk5T-6Z0qsXfk2Mk1Xtxh4fXE",
-  authDomain: "imovisitors.firebaseapp.com",
-  databaseURL: "https://imovisitors-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "imovisitors",
-  storageBucket: "imovisitors.firebasestorage.app",
-  messagingSenderId: "159209243974",
-  appId: "1:159209243974:web:8b1c143d27c5e638f75147",
-  measurementId: "G-6VRYVK38KE"
+  apiKey: "AIzaSyCiELBv1BL1TIzcv1cQf44bkqP2fkOOMR4",
+  authDomain: "bari-5ba78.firebaseapp.com",
+  databaseURL: "https://bari-5ba78-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "bari-5ba78",
+  storageBucket: "bari-5ba78.firebasestorage.app",
+  messagingSenderId: "1036574826555",
+  appId: "1:1036574826555:web:09c163b6e983906012bc1e",
+  measurementId: "G-PD9PWTZXTY"
 };
 
 const app = initializeApp(firebaseConfig);
