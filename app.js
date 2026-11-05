@@ -57,14 +57,14 @@ document.getElementById('mediaVideo').onloadedmetadata = handleVideoScale;
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCiELBv1BL1TIzcv1cQf44bkqP2fkOOMR4",
-  authDomain: "bari-5ba78.firebaseapp.com",
-  databaseURL: "https://bari-5ba78-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "bari-5ba78",
-  storageBucket: "bari-5ba78.firebasestorage.app",
-  messagingSenderId: "1036574826555",
-  appId: "1:1036574826555:web:09c163b6e983906012bc1e",
-  measurementId: "G-PD9PWTZXTY"
+  apiKey: "AIzaSyBj2rY6mwZAXefNEBIrkvpatr2IeCuaE6M",
+  authDomain: "apps-diamond.firebaseapp.com",
+  databaseURL: "https://apps-diamond-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "apps-diamond",
+  storageBucket: "apps-diamond.firebasestorage.app",
+  messagingSenderId: "36822032776",
+  appId: "1:36822032776:web:5ad0cbcf5bc93b85051a3d",
+  measurementId: "G-ZCR3S6YXWC"
 };
 
 const app = initializeApp(firebaseConfig);
