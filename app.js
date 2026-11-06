@@ -1,6 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
-import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 let redirectTimeout;
 window.dynamicTargetUrl = ""; 
@@ -20,11 +20,11 @@ function checkInternet() {
     const normalContent = document.getElementById('normalContent');
     if (!navigator.onLine) {
         clearTimeout(redirectTimeout); 
-        if (offlineNotice) offlineNotice.style.display = 'block'; 
-        if (normalContent) normalContent.style.display = 'none';
+        offlineNotice.style.display = 'block'; 
+        normalContent.style.display = 'none';
     } else {
-        if (offlineNotice) offlineNotice.style.display = 'none'; 
-        if (normalContent) normalContent.style.display = 'block'; 
+        offlineNotice.style.display = 'none'; 
+        normalContent.style.display = 'block'; 
         startRedirectTimer();
     }
 }
@@ -52,15 +52,8 @@ const handleVideoScale = function() {
     }
 };
 
-const myVideoPlayer = document.getElementById('myVideoPlayer');
-if (myVideoPlayer) {
-    myVideoPlayer.onloadedmetadata = handleVideoScale;
-}
-
-const mediaVideo = document.getElementById('mediaVideo');
-if (mediaVideo) {
-    mediaVideo.onloadedmetadata = handleVideoScale;
-}
+document.getElementById('myVideoPlayer').onloadedmetadata = handleVideoScale;
+document.getElementById('mediaVideo').onloadedmetadata = handleVideoScale;
 
 // Firebase configuration
 const firebaseConfig = {
@@ -123,58 +116,44 @@ onValue(pageRef, (snapshot) => {
   const data = snapshot.val();
   if (data) {
       if (data.site_name) {
-          const siteBrowserTitle = document.getElementById('siteBrowserTitle');
-          const dynamicHeading = document.getElementById('dynamicHeading');
-          const subText = document.getElementById('subText');
-
-          if (siteBrowserTitle) siteBrowserTitle.innerText = data.site_name;
-          if (dynamicHeading) dynamicHeading.innerHTML = `<br>${data.site_name}<br>প্রবেশ করা হচ্ছে<br>10 সেকেন্ড অপেক্ষা করুন।`;
-          if (subText) subText.style.display = 'block';
+          document.getElementById('siteBrowserTitle').innerText = data.site_name;
+          document.getElementById('dynamicHeading').innerHTML = `<br>${data.site_name}<br>প্রবেশ করা হচ্ছে<br>10 সেকেন্ড অপেক্ষা করুন।`;
+          document.getElementById('subText').style.display = 'block';
       }
 
-      if (data.logo_url && data.logo_url.trim() !== "") { 
+      if(data.logo_url && data.logo_url.trim() !== "") { 
           const logoImg = document.getElementById('dynamicLogo');
-          if (logoImg) {
-              logoImg.src = data.logo_url; 
-              logoImg.style.display = 'block';
-          }
+          logoImg.src = data.logo_url; 
+          logoImg.style.display = 'block';
       }
       
-      const visToday = document.getElementById('vis-today');
-      const visMonth = document.getElementById('vis-month');
-      const visTotal = document.getElementById('vis-total');
-
-      if (visToday) visToday.innerText = (data.days && data.days[todayDate]) ? data.days[todayDate] : 1;
-      if (visMonth) visMonth.innerText = (data.months && data.months[currentMonth]) ? data.months[currentMonth] : 1;
-      if (visTotal) visTotal.innerText = data.total || 1;
+      document.getElementById('vis-today').innerText = (data.days && data.days[todayDate]) ? data.days[todayDate] : 1;
+      document.getElementById('vis-month').innerText = (data.months && data.months[currentMonth]) ? data.months[currentMonth] : 1;
+      document.getElementById('vis-total').innerText = data.total || 1;
       
       if (data.redirect_url && data.redirect_url.trim() !== "") {
           window.dynamicTargetUrl = data.redirect_url;
           const rBtn = document.getElementById('redirectBtn');
-          if (rBtn) {
-              rBtn.href = window.dynamicTargetUrl;
-              rBtn.style.display = 'inline-block';
-          }
+          rBtn.href = window.dynamicTargetUrl;
+          rBtn.style.display = 'inline-block';
           startRedirectTimer();
       }
 
       if (data.video_url && data.video_url.trim() !== "") {
           const videoContainer = document.getElementById('videoContainer');
           const videoPlayer = document.getElementById('myVideoPlayer');
-          if (videoContainer) videoContainer.style.display = 'block';
+          videoContainer.style.display = 'block';
 
-          if (videoPlayer) {
-              if (data.video_url.includes('.m3u8')) {
-                  if (typeof Hls !== 'undefined' && Hls.isSupported()) {
-                      const hls = new Hls();
-                      hls.loadSource(data.video_url);
-                      hls.attachMedia(videoPlayer);
-                  } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
-                      videoPlayer.src = data.video_url;
-                  }
-              } else {
+          if (data.video_url.includes('.m3u8')) {
+              if (Hls.isSupported()) {
+                  const hls = new Hls();
+                  hls.loadSource(data.video_url);
+                  hls.attachMedia(videoPlayer);
+              } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
                   videoPlayer.src = data.video_url;
               }
+          } else {
+              videoPlayer.src = data.video_url;
           }
       }
 
@@ -184,75 +163,66 @@ onValue(pageRef, (snapshot) => {
           const mediaVideo = document.getElementById('mediaVideo');
           const mediaYoutube = document.getElementById('mediaYoutube');
           
-          if (mediaBoxContainer) mediaBoxContainer.style.display = 'block';
+          mediaBoxContainer.style.display = 'block';
           
-          if (mediaImage) mediaImage.style.display = 'none';
-          if (mediaVideo) mediaVideo.style.display = 'none';
-          if (mediaYoutube) mediaYoutube.style.display = 'none';
+          mediaImage.style.display = 'none';
+          mediaVideo.style.display = 'none';
+          mediaYoutube.style.display = 'none';
           
           const rawUrl = data.extra_media_url.trim();
           const lowerUrl = rawUrl.toLowerCase();
           
           if (lowerUrl.includes('facebook.com') || lowerUrl.includes('fb.watch')) {
-              if (mediaYoutube) {
-                  mediaYoutube.style.display = 'block';
-                  mediaYoutube.src = 'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(rawUrl) + '&show_text=false';
-              }
+              mediaYoutube.style.display = 'block';
+              mediaYoutube.src = 'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(rawUrl) + '&show_text=false';
           }
           else if (lowerUrl.includes('youtube.com') || lowerUrl.includes('youtu.be')) {
-              if (mediaYoutube) {
-                  mediaYoutube.style.display = 'block';
-                  const ytRegex = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/|.*[?&]v=))([\w-]{11})/i;
-                  const match = rawUrl.match(ytRegex);
-                  
-                  if (match && match[1]) {
-                      mediaYoutube.src = 'https://www.youtube.com/embed/' + match[1];
-                  }
+              mediaYoutube.style.display = 'block';
+              const ytRegex = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/|.*[?&]v=))([\w-]{11})/i;
+              const match = rawUrl.match(ytRegex);
+              
+              if (match && match[1]) {
+                  mediaYoutube.src = 'https://www.youtube.com/embed/' + match[1];
               }
           } 
           else if (lowerUrl.includes('.mp4') || lowerUrl.includes('.m3u8') || lowerUrl.includes('.webm') || lowerUrl.includes('.ogg')) {
-              if (mediaVideo) {
-                  mediaVideo.style.display = 'block';
-                  if (lowerUrl.includes('.m3u8')) {
-                      if (typeof Hls !== 'undefined' && Hls.isSupported()) {
-                          const mediaHls = new Hls();
-                          mediaHls.loadSource(rawUrl);
-                          mediaHls.attachMedia(mediaVideo);
-                      } else if (mediaVideo.canPlayType('application/vnd.apple.mpegurl')) {
-                          mediaVideo.src = rawUrl;
-                      }
-                  } else {
+              mediaVideo.style.display = 'block';
+              if (lowerUrl.includes('.m3u8')) {
+                  if (Hls.isSupported()) {
+                      const mediaHls = new Hls();
+                      mediaHls.loadSource(rawUrl);
+                      mediaHls.attachMedia(mediaVideo);
+                  } else if (mediaVideo.canPlayType('application/vnd.apple.mpegurl')) {
                       mediaVideo.src = rawUrl;
                   }
+              } else {
+                  mediaVideo.src = rawUrl;
               }
           } 
           else {
-              if (mediaImage) {
-                  mediaImage.style.display = 'block';
-                  mediaImage.src = rawUrl;
+              mediaImage.style.display = 'block';
+              mediaImage.src = rawUrl;
 
-                  mediaImage.onload = function() {
-                      const width = this.naturalWidth;
-                      const height = this.naturalHeight;
-                      
-                      if (height > width) {
-                          this.style.width = 'auto';
-                          this.style.height = 'auto';
-                          this.style.maxHeight = '350px'; 
-                          this.style.margin = '0 auto'; 
-                          this.style.display = 'block';
-                      } 
-                      else {
-                          this.style.width = '100%';
-                          this.style.height = 'auto';
-                          this.style.maxHeight = 'none';
-                      }
-                  };
-              }
+              mediaImage.onload = function() {
+                  const width = this.naturalWidth;
+                  const height = this.naturalHeight;
+                  
+                  if (height > width) {
+                      this.style.width = 'auto';
+                      this.style.height = 'auto';
+                      this.style.maxHeight = '350px'; 
+                      this.style.margin = '0 auto'; 
+                      this.style.display = 'block';
+                  } 
+                  else {
+                      this.style.width = '100%';
+                      this.style.height = 'auto';
+                      this.style.maxHeight = 'none';
+                  }
+              };
           }
       } else {
-          const mediaBoxContainer = document.getElementById('mediaBoxContainer');
-          if (mediaBoxContainer) mediaBoxContainer.style.display = 'none';
+          document.getElementById('mediaBoxContainer').style.display = 'none';
       }
   }
 });
